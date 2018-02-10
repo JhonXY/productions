@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>2017用户年报</title>
+  <link rel="shortcut icon" href="img/favicon.ico">
+  <script src="js/lib/jquery.min.js"></script>
+  <script src="js/lib/jquery.scrollTo.min.js"></script>
+  <!-- <script src="js/lib/jquery.pagepiling.min.js"></script> -->
+  <script src="js/lib/jquery.fullpage.min.js"></script>
+  <script src="js/lib/scrolloverflow.min.js"></script>
+  <script src="js/lib/echarts.min.js"></script>
+  <script src="js/lib/china.js"></script>
+  <!-- <link rel="stylesheet" href="jquery.pagepiling.css"> -->
+  <link rel="stylesheet" href="js/lib/jquery.fullpage.min.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/animate.css">
+</head>
+<style>
+  @font-face {
+    font-family: 'NotoSansHansRegular';
+    src: url(css/font/NotoSansHans-Regular.otf);
+  }  
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  html, body {
+    color: #fff;
+    height: 100%;
+    font-family: NotoSansHansRegular, "Microsoft YaHei", Helvetica, Arial, sans-serif;
+  }
+  #wrap {
+    height: 100%;
+    position: relative;
+    touch-action: none;
+    transform: translate3d(0px, 0px, 0px);
+    transition: all 700ms ease;
+  }
+  #header .container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(80deg, #5abbff 0%, #5573e9  50%, #502cd4 100%)
+  }
+  .header-title {
+    font-size: 36px;
+    text-align: center;
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%)
+  }
+  .icon-down {
+    font-size: 36px;
+    text-align: center;
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%)
+  }
+  #go-down {
+    width: 100px;
+    height: 100px;
+    background: url(img/go-down.png) center no-repeat;
+  }
+  .section {
+    min-width: 1311px;
+    background-color: #fff;
+    overflow: hidden;
+  }
+  #wrap div.section:nth-child(2){
+    background-color: #28256c
+  }
+  #wrap div.section:nth-child(3){
+    background-color: #1e1557
+  }
+  #wrap div.section:nth-child(4){
+    background-image: linear-gradient(180deg, #5abbff 0%, #2c54d4 100%)
+  }
+  #wrap div.section:nth-child(5){
+    background-color: #28256c
+  }
+  #wrap div.section:nth-child(6){
+    background-color: #1e1557
+  }
+  #wrap div.section:nth-child(7){
+    background-color: #28256c
+  }
+  #wrap div.section:nth-child(8){
+    background-color: #28256c
+  }
+  .content-header {
+    height: 70px;
+    min-width: 1311px;
+    background-color: rgba(76, 114, 231, 0.5)
+  }
+  .content-header-detail {
+    color: #fff;
+    width: 1311px;
+    margin: 0 auto;
+    position: relative;
+    line-height: 65px;
+  }
+  .content-header-detail .title {
+    vertical-align: sub;
+    /* line-height: 70px; */
+    font-size: 30px;
+    padding-right: 10px;
+  }
+  .content-header-detail .little-title {
+    padding-bottom: 8px;
+    vertical-align: super;
+    font-size: 14px;
+    /* position: absolute;
+    line-height: 33px;
+    top: 11px; */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  .chart-position {
+    box-sizing: border-box;
+    width: 40%;
+    height: 56%;
+    position: relative;
+    /* position: absolute; */
+    /* top: 20%; */
+  }
+  .chart-position-lg {
+    box-sizing: border-box;
+    width: 100%;
+    height: 75%;
+    position: absolute;
+    top: 6.5%;
+  }
+  .chart-position-lg.chart-final {
+    left: 50%;
+    width: 60%;
+    height: 50%;
+    top: 15%;
+    transform: translateX(-50%);
+  }
+  .chart-container {
+    position: relative;
+    width: 1311px;
+    margin: 0 auto;
+    height: 100%;
+    min-height: 590px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .lg-container {
+    position: relative;
+    overflow: hidden;
+    width: 1311px;
+    margin: 0 auto;
+    height: 100%;
+  }
+  .icon-section {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+  }
+  /* .chart-position.icon-position:nth-child(2n+1) {
+    top: 20%;
+    left: 10%;
+  }
+  .chart-position.icon-position:nth-child(2n) {
+    top: 20%;
+  } */
+  /* .chart-position:nth-child(2n+1) {
+    flex: 1;
+  }
+  .chart-position:nth-child(2n) {
+    flex: 1;
+  } */
+  .icon-lg {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 216px;
+    height: 212px;
+  }
+  .icon-lg img {
+    vertical-align: middle;
+    width: 100%;
+    height: 100%;
+  }
+  .icon-title {
+    width: 510px;
+    height: 92px;
+    padding-top: 190px;
+  }
+  .icon-title p {
+    font-size: 30px;    
+    text-align: center;
+  }
+  .icon-title p span{
+    color: #35b6fb;
+    font-size: 60px;
+    text-align: center;
+  }
+  .center-title {
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    position: absolute;
+    bottom: 17%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .center-title p {
+    padding-top: 20px;
+  }
+  .important-text {
+    font-size: inherit;
+    color: #35b6fb;
+  }
+  .chart1-position {
+    top: -8%;
+  }
+  .chart1-title-l, .chart1-title-r,
+  .chart4-title-l, .chart5-title-r{
+    position: absolute;
+    text-align: center;
+    font-size: 20px;
+  }
+  .chart1-title-l {
+    bottom: 30%;
+    left: 5%;
+  }
+  .chart1-title-r {
+    bottom: 27%;
+    right: 4%;
+  }
+  .chart4-title-l {
+    bottom: 25%;
+    left: 5%;
+  }
+  .chart5-title-r {
+    bottom: 25%;
+    right: 5%;
+  }
+  .chart8-title {
+    top: 5%;
+    bottom: auto;
+  }
+  .chart10-title {
+    top: 8%;
+    bottom: auto;
+  }
+  #chart2 {
+    width: 45%;
+  }
+  #chart6, #chart7 {
+    top: -5%;
+  }
+  .panel-3 {
+    display: none;
+    position: absolute;
+    width: 100%;
+    bottom: 15%;
+  }
+  .panel-3 .report-comment {
+      width: 100%;
+      text-align: center;
+      font-size: 16px;
+  }
+
+  .panel-3 .report-star {
+      width: 200px;
+      margin: 0 auto;
+  }
+
+  .panel-3 .report-star ul {
+      list-style: none;
+      width: 100%;
+      overflow: hidden;
+      padding-top: 30px;
+      padding-left: 0;
+  }
+
+  .panel-3 .report-star ul li {
+      list-style: none;
+      float: left;
+      width: 24px;
+      height: 24px;
+      margin-right: 20px;
+      background: url(img/star-empty.png) 0 0 repeat;
+      background-size:100% 100%;
+      cursor: pointer;
+  }
+
+  .panel-3 .report-star ul li.active {
+      background: url(img/star-full.png) 0 0 repeat;
+      background-size:100% 100%;  
+  }
+
+  .panel-3 .report-star ul li:last-child{
+      margin-right: 0px;
+  }
+
+  #get-Commet {
+    display: relative;
+  }
+</style>
+<body>
+  <div id="wrap">
+    <div id="header" class="section">
+      <div class="container">
+        <div class="header-title">
+          回顾你和SendCloud的2017年
+        </div>
+        <div class="icon-down">
+          <div id="go-down"></div>
+        </div>
+        <canvas height="100%" width="100%" id="canvas"></canvas>
+      </div>
+    </div>
+    <div class="section Email" data-getCart="1-2">
+      <div class="content-header">
+        <div class="content-header-detail">
+          <span class="title">EMAIL</span>
+          <span class="little-title">My Annual Report 2017</span>
+        </div>
+      </div>
+      <div class="chart-container">
+        <div class="chart1-position chart-position" id="chart1"></div>
+        <div class="chart1-title-l">邮件触达人群中,使用 <span class="important-text"></span> 邮箱人最多</div>
+        <div class="chart1-position chart-position" id="chart2"></div>
+        <div class="chart1-title-r">
+          <p>2017年通过SendCloud共请求 <span class="important-text"></span> 封邮件，</p>
+          <p>送达 <span class="important-text"></span> 封，触达 <span class="important-text"></span> 人</p>
+        </div>
+      </div>
+    </div>
+    <div class="section Email" data-getCart="3">
+      <div class="content-header">
+        <div class="content-header-detail">
+          <span class="title">EMAIL</span>
+          <span class="little-title">My Annual Report 2017</span>
+        </div>
+      </div>
+      <div class="lg-container">
+        <div class="chart-position-lg" id="chart3">
+        </div>
+        <div class="chart3-title center-title">
+          <p>2017年， 第
+            <span class="important-text"></span>
+            周请求峰值达到
+            <span class="important-text"></span>
+            封，其中 <span class="important-text"></span> 封邮件成功送达。
+          </p>
+          <p>周平均请求数为
+            <span class="important-text"></span>
+            封，送达数为
+            <span class="important-text"></span> 封。
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="section Email" >
+      <div class="content-header">
+        <div class="content-header-detail">
+          <span class="title">EMAIL</span>
+          <span class="little-title">My Annual Report 2017</span>
+        </div>
+      </div>
+      <div class="chart-container">
+        <div class="chart-position icon-position">
+          <div class="icon-section">
+            <div class="icon-lg">
+              <img src="img/email1.png" alt="">
+            </div>
+            <div class="icon-title">
+              <p>
+                <span>96%</span>
+                的触发邮件在1分钟内送达
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="chart-position icon-position">
+          <div class="icon-section">
+            <div class="icon-lg">
+              <img src="img/email2.png" alt="">
+            </div>
+            <div class="icon-title">
+              <p>
+                <span>99%</span>
+                的批量邮件在3小时内送达
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="ForChart4" class="section Email" data-getCart="4-5">
+      <div class="content-header">
+        <div class="content-header-detail">
+          <span class="title">EMAIL</span>
+          <span class="little-title">My Annual Report 2017</span>
+        </div>
+      </div>
+      <div class="chart-container">
+        <div class="chart1-position chart-position" id="chart4"></div>
+        <div class="chart4-title-l">您的邮件最受
+          <span></span> 地区的用户欢迎
+        </div>
+        <div class="chart1-position chart-position" id="chart5"></div>
+        <div class="chart5-title-r">人们最喜欢在
+          <span></span> 时段阅读您的邮件
+        </div>
+      </div>
+    </div>
+    <div id="ForChart6" class="email-last section Email" data-getCart="6-7">
+      <div class="content-header">
+        <div class="content-header-detail">
+          <span class="title">EMAIL</span>
+          <span class="little-title">My Annual Report 2017</span>
+        </div>
+      </div>
+      <div class="chart-container">
+        <div class="chart-position" id="chart6"></div>
+        <div class="chart-position" id="chart7"></div>
+        <div id="email-rate" class="panel-3">
+          <div class="report-comment">为SendCloud一年的服务评个分吧！</div>
+          <div class="report-star">
+            <ul>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section" id="sms-one" data-getCart="8-9">
+      <div class="content-header">
+        <div class="content-header-detail">
+          <span class="title">SMS/MMS/VOICE</span>
+          <span class="little-title">My Annual Report 2017</span>
+        </div>
+      </div>
+      <div class="chart-container">
+        <div class="chart-position" id="chart8"></div>
+        <div class="chart-position" id="chart9"></div>
+        <div class="chart8-title center-title">
+          <p>2017年您成功向SendCloud发起 <span class="important-text"></span> 次短信/语音/彩信请求</p>
+          <p>短信/语音/语音触达用户 <span class="important-text"></span> 次</p>
+        </div>
+      </div>
+    </div>
+    <div  class="section" id="sms-two" data-getCart="10">
+      <div class="content-header">
+        <div class="content-header-detail">
+          <span class="title">SMS/MMS/VOICE</span>
+          <span class="little-title">My Annual Report 2017</span>
+        </div>
+      </div>
+      <div id="SMS-last" class="lg-container">
+        <div class="chart-position-lg chart-final" id="chart10">
+        </div>
+        <div class="chart10-title center-title">
+          <p><span class="important-text"></span> 人收到了来自您的短信/彩信/语音消息</p>
+        </div>
+        <div class="panel-3">
+          <div class="report-comment">为SendCloud一年的服务评个分吧！</div>
+          <div class="report-star">
+            <ul>
+              <li class=""></li>
+              <li class=""></li>
+              <li class=""></li>
+              <li class=""></li>
+              <li class=""></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="loader">
+      <svg width="250px" height="37px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        xml:space="preserve">
+        <g>
+          <g style="transform-origin: 50px 50px 0px;">
+            <g class="ld ld-fade" style="transform-origin: 50px 50px 0px; animation-duration: 5s; animation-delay: -4.7s;">
+              <path fill="#ffffff" d=" M 10.43 0.00 L 12.12 0.00 C 19.90 11.72 26.95 23.91 34.55 35.74 C 31.21 35.79 27.86 35.86 24.52 36.00 L 10.42 36.00 C 7.02 35.38 -1.41 37.93 0.69 32.04 C 3.97 21.37 6.86 10.58 10.43 0.00 Z" />
+            </g>
+            <g class="ld ld-fade" style="transform-origin: 50px 50px 0px; animation-duration: 5s; animation-delay: -4.4s;">
+              <path fill="#ffffff" d=" M 27.51 23.22 C 37.62 15.66 46.57 6.29 57.51 0.01 C 54.62 10.33 51.88 20.69 48.72 30.93 C 48.19 33.34 46.43 35.18 44.13 36.00 L 43.29 36.00 C 40.56 35.96 37.83 35.90 35.10 35.83 C 32.78 31.50 30.03 27.42 27.51 23.22 Z"/>
+            </g>
+            <g class="ld ld-fade" style="transform-origin: 50px 50px 0px; animation-duration: 5s; animation-delay: -4.1s;">
+              <path fill="#ffffff" opacity="1.00" d=" M 72.52 8.61 C 76.63 6.34 81.67 6.93 86.00 8.23 C 85.60 9.50 85.17 10.76 84.74 12.01 C 81.30 10.94 75.57 9.33 74.06 13.91 C 74.48 19.67 84.32 19.39 83.70 25.97 C 83.94 35.63 71.41 37.27 64.53 34.03 C 65.18 32.74 65.83 31.44 66.52 30.17 C 70.26 31.87 76.47 32.71 78.29 27.94 C 79.43 24.00 74.65 22.59 72.21 20.75 C 67.62 18.34 68.09 10.94 72.52 8.61 Z"/>
+            </g>
+            
+            <g class="ld ld-fade" style="transform-origin: 50px 50px 0px; animation-duration: 5s; animation-delay: -3.8s;">
+              <path fill="#ffffff" opacity="1.00" d=" M 88.91 33.07 C 82.42 24.52 93.98 9.46 103.48 16.49 C 107.80 23.89 97.26 27.16 91.71 27.48 C 92.47 32.90 98.40 32.17 102.19 30.59 C 102.42 31.82 102.64 33.06 102.85 34.30 C 98.37 35.37 92.55 36.80 88.91 33.07 M 92.16 23.78 C 94.82 23.37 99.97 22.96 99.74 19.28 C 96.68 16.26 93.40 21.31 92.16 23.78 Z"/>
+            </g>
+            <g class="ld ld-fade" style="transform-origin: 50px 50px 0px; animation-duration: 5s; animation-delay: -3.5s;">
+              <path fill="#ffffff" opacity="1.00" d=" M 114.58 17.36 C 117.38 14.30 124.10 13.23 125.65 18.03 C 126.05 23.75 124.04 29.30 123.44 34.95 C 121.81 35.06 120.19 35.13 118.56 35.19 C 118.43 29.60 123.11 22.77 119.08 18.10 C 112.81 21.21 112.91 29.07 111.70 35.00 C 110.12 35.08 108.53 35.13 106.94 35.17 C 107.71 28.45 109.77 21.90 109.82 15.11 C 111.70 15.18 114.74 14.50 114.58 17.36 Z"/>
+            </g>
+            <g class="ld ld-fade" style="transform-origin: 50px 50px 0px; animation-duration: 5s; animation-delay: -3.2s;">
+              <path fill="#ffffff" opacity="1.00" d=" M 144.79 6.88 C 146.35 6.87 147.92 6.87 149.49 6.87 C 149.36 16.41 145.93 25.56 145.59 35.09 C 144.58 35.09 142.56 35.10 141.56 35.10 C 141.41 34.59 141.11 33.55 140.96 33.04 C 138.02 35.67 132.22 37.00 130.05 32.79 C 126.90 23.98 134.34 13.45 143.98 14.67 C 144.40 12.09 144.65 9.49 144.79 6.88 M 134.73 30.55 C 135.05 31.57 136.64 32.30 137.48 31.47 C 141.84 28.64 142.48 22.98 143.39 18.32 C 137.16 17.85 132.97 25.07 134.73 30.55 Z"/>
+            </g>
+            <g class="ld ld-fade" style="transform-origin: 50px 50px 0px; animation-duration: 5s; animation-delay: -2.9s;">
+              <path fill="#ffffff" opacity="1.00" d=" M 158.64 9.68 C 162.93 6.38 168.68 6.88 173.67 7.87 C 173.27 9.22 172.83 10.56 172.36 11.88 C 161.95 6.75 153.48 21.02 158.73 29.38 C 161.36 32.66 165.93 31.44 169.33 30.34 C 169.35 31.73 171.21 34.22 168.91 34.59 C 163.47 36.23 155.54 36.16 153.00 30.00 C 150.82 23.02 152.63 14.26 158.64 9.68 Z"/>
+            </g>
+            <g class="ld ld-fade" style="transform-origin: 50px 50px 0px; animation-duration: 5s; animation-delay: -2.6s;">
+              <path fill="#ffffff" opacity="1.00" d=" M 177.54 7.00 C 179.14 6.92 180.74 6.88 182.35 6.83 C 182.22 15.24 179.07 23.30 178.79 31.67 C 179.64 31.65 181.33 31.60 182.17 31.57 C 182.19 32.46 182.24 34.24 182.26 35.13 C 179.34 35.25 174.39 36.08 173.86 32.02 C 174.31 23.60 177.30 15.47 177.54 7.00 Z"/>
+            </g>
+            <g class="ld ld-fade" style="transform-origin: 50px 50px 0px; animation-duration: 5s; animation-delay: -2.3s;">
+              <path fill="#ffffff" opacity="1.00" d=" M 192.44 15.61 C 196.32 13.99 202.54 14.35 203.92 19.13 C 205.42 24.86 203.14 32.05 197.52 34.68 C 193.57 36.27 187.35 35.85 185.99 31.02 C 184.59 25.32 186.84 18.19 192.44 15.61 M 194.27 19.05 C 190.91 21.72 188.91 27.65 191.74 31.25 C 199.31 35.19 203.52 15.69 194.27 19.05 Z"/>
+            </g>
+            <g class="ld ld-fade" style="transform-origin: 50px 50px 0px; animation-duration: 5s; animation-delay: -2.0s;">
+              <path fill="#ffffff" opacity="1.00" d=" M 210.44 15.22 C 212.06 15.21 213.68 15.21 215.30 15.21 C 215.42 20.70 210.48 27.79 214.91 32.12 C 220.99 28.79 220.91 21.17 222.16 15.22 C 223.76 15.21 225.36 15.22 226.96 15.25 C 225.89 21.90 224.25 28.47 223.86 35.21 C 221.92 35.10 219.17 35.88 219.23 33.02 C 216.36 35.75 210.05 37.06 208.29 32.54 C 207.63 26.71 209.79 20.98 210.44 15.22 Z"/>
+            </g>
+            <g class="ld ld-fade" style="transform-origin: 50px 50px 0px; animation-duration: 5s; animation-delay: -1.7s;">
+              <path fill="#ffffff" opacity="1.00" d=" M 244.96 6.88 C 246.53 6.87 248.09 6.86 249.67 6.86 C 249.58 16.40 246.22 25.58 245.76 35.10 C 244.43 35.10 243.09 35.10 241.76 35.10 C 241.62 34.56 241.34 33.48 241.19 32.94 C 238.35 35.68 232.44 37.02 230.32 32.80 C 227.45 25.00 233.22 14.62 242.08 14.85 C 246.13 15.16 244.18 9.41 244.96 6.88 M 234.72 30.02 C 234.93 31.59 237.00 32.45 238.13 31.20 C 242.14 28.24 242.71 22.85 243.61 18.33 C 237.51 17.82 233.58 24.61 234.72 30.02 Z"/>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </div>
+  </div>
+  
+  <script>
+  $(document).ready(function(){
+    $.fn.fullpage.setAllowScrolling(false);
+    
+    var windowHeight = $(window).height()
+    var windowWidth = $(window).width()
+    // $("#header").height(windowHeight);
+
+    var _ = {}
+    _.now = Date.now || function () {
+      return new Date().getTime();
+    };
+    _.debounce = function (func, wait, immediate) {
+      var timeout, args, context, timestamp, result;
+
+      var later = function () {
+        var last = _.now() - timestamp;
+        if (last < wait && last >= 0) {
+          timeout = setTimeout(later, wait - last);
+        } else {
+          timeout = null;
+          if (!immediate) {
+            result = func.apply(context, args);
+            if (!timeout)
+              context = args = null;
+          }
+        }
+      };
+
+      return function () {
+        context = this;
+        args = arguments;
+
+        timestamp = _.now();
+        var callNow = immediate && !timeout;
+
+        if (!timeout)
+          timeout = setTimeout(later, wait);
+
+        if (callNow) {
+          result = func.apply(context, args);
+          context = args = null;
+        }
+
+        return result;
+      };
+    };
+
+    var forResize = function () {
+
+      windowHeight = $(window).height();
+      windowWidth = $(window).width();
+
+      for (var key in EchartsOptions) {
+        EchartsOptions[key].el.resize()
+      }
+
+      resizeCanvas()
+    }
+
+    window.onresize = _.debounce(forResize, 1000, false)
+  })
+
+  var windowHeight = window.innerHeight
+  var windowWidth = window.innerWidth
+
+  var canvas = document.querySelector("#canvas");
+  var context = canvas.getContext("2d");
+
+  var stars = {},
+    particleIndex = 0,
+    settings = {
+      density: 1000,
+      maxLife: 100,
+      groundLevel: canvas.height,
+      leftWall: 0,
+      rightWall: canvas.width,
+      alpha: 0.0,
+      maxAlpha: 1
+    };
+
+  function resizeCanvas() {
+    var windowHeight = window.innerHeight
+    var windowWidth = window.innerWidth
+    
+    canvas.width = windowWidth;
+    canvas.height = windowHeight;
+    settings.rightWall = canvas.width;
+    settings.groundLevel = canvas.height;
+    redraw();
+  }
+
+  resizeCanvas();
+
+  function redraw() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.fillStyle = "rgba(0,0,0,0)";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+  }
+
+  function Star() {
+    this.x = Math.floor(Math.random() * canvas.width);
+    this.y = Math.floor(Math.random() * canvas.height);
+    
+    // 横向偏移，移动速度
+    this.vx = Math.random() * ((Math.random() > 0.5) ? 1 : -1) * 0.5 + 0.025;    
+    // 纵向偏移，移动速度
+    this.vy = Math.random() * ((Math.random() > 0.5) ? 1 : -1)  * 0.5 + 0.025;
+
+    // 星星的尺寸
+    this.particleSize = 0.3 + (Math.random() + 0.5 / 4);
+    particleIndex++;
+    stars[particleIndex] = this;
+    this.alpha = 0.0;
+    this.maxAlpha = 0.2 + (this.y / canvas.height) * Math.random() * 0.8;
+    this.alphaAction = 1;
+  }
+
+    Star.prototype.draw = function () {
+      // 横坐标移动
+      this.x += this.vx;
+      // 根据切线方向进行偏移
+      // y坐标
+      this.y += this.vy
+
+      // 透明度慢慢起来
+      if (this.alphaAction == 1) {
+        if (this.alpha < this.maxAlpha) {
+          this.alpha += 0.005;
+        } else {
+          this.alphaAction = -1;
+        }
+      } else {
+        if (this.alpha > 0.2) {
+          this.alpha -= 0.002;
+        } else {
+          this.alphaAction = 1;
+        }
+      }
+
+      if (this.x + (this.particleSize * 2) >= settings.rightWall) {
+        // x到右侧
+        this.x = this.x - settings.rightWall;
+      }
+
+      if (this.x + (this.particleSize * 2) <= 0) {
+        // x到左侧
+        this.x = settings.rightWall - this.particleSize * 2;
+      }
+
+      if (this.y + (this.particleSize * 2) >= settings.groundLevel) {
+        // x到底部
+        this.y = 0 + this.particleSize * 2;
+      }
+
+      if (this.y + (this.particleSize * 2) <= 0) {
+        // x到顶部
+        this.y = settings.groundLevel - this.particleSize * 2;
+      }
+
+      // 绘制星星
+      context.beginPath();
+      context.fillStyle = "rgba(255,255,255," + this.alpha.toString() + ")";
+      context.arc(this.x, this.y, this.particleSize, 0, Math.PI * 2, true);
+      context.closePath();
+      context.fill();
+    }
+
+    function render() {
+      redraw();
+      // 星星的数目
+      // IE下CUP性能有限，数目小
+      var length = 1000;
+      if (!history.pushState) {
+        // IE9
+        length = 200;
+      } else if (document.msHidden != undefined) {
+        // IE10+
+        length = 300;
+      }
+
+      if (Object.keys(stars).length > length) {
+        settings.density = 0;
+      }
+
+      for (var i = 0; i < settings.density; i++) {
+        if (Math.random() > 0.97) {
+          new Star();
+        }
+      }
+
+      // 星星实时移动
+      for (var i in stars) {
+        stars[i].draw();
+      }
+
+      requestAnimationFrame(render);
+    }
+
+    if (!window.requestAnimationFrame) {
+      window.requestAnimationFrame = function (fn) {
+        setTimeout(fn, 17);
+      };
+    }
+
+    render();
+    //全屏滚动
+    $('#wrap').fullpage({
+      menu: null,
+      direction: 'vertical',
+      scrollingSpeed: 500,
+      scrollOverflow: false,
+      css3: true,
+      verticalCentered: false,
+      onLeave: function(a, b){
+        var wrapList = $('#wrap').children('.section')
+        var log = wrapList.eq(b-1).data('getcart') || ''
+        console.log(log);
+           
+        switch(true){
+          case log == '3': 
+            EchartsOptions.chart3.init();
+            break;
+          case log === '4-5':
+            EchartsOptions.chart4.init();
+            EchartsOptions.chart5.init();
+            break; 
+          case log === '6-7':
+            EchartsOptions.chart6.init();
+            EchartsOptions.chart7.init();
+            break; 
+          case log === '8-9': 
+            EchartsOptions.chart8.init();
+            EchartsOptions.chart9.init();
+            break;
+          case log == '10': 
+            EchartsOptions.chart10.init();
+            break;
+          case log === '1-2':
+            EchartsOptions.chart1.init();
+            EchartsOptions.chart2.init();
+            break;
+          default: break; 
+        }
+      },
+      afterLoad: function(a, b){
+        if ($(document).scrollTop() + $(window).height() == $(document).height()) {
+          $('.panel-3').css('display', 'block').addClass('animated fadeInUp')
+        }
+      }
+    });
+  </script>
+  <script src="js/lib/anime.min.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
